@@ -12,7 +12,6 @@ class MyApp extends StatelessWidget{
     return const MaterialApp(
       title: "schaffen_assignment",
       home:HomePage()
-
     );
   }
 

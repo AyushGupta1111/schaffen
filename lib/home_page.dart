@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:schaffen_assignment/bottom_sheet.dart';
 class HomePage extends StatefulWidget{
@@ -13,6 +12,9 @@ class _HomePageState extends State<HomePage> {
   final ScrollController _scrollController = ScrollController();
   bool scroll=false;
   bool showSearchBar=false;
+  late double screenHeight;
+
+
   @override
   void initState() {
     super.initState();
@@ -33,12 +35,29 @@ class _HomePageState extends State<HomePage> {
     showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
-        return BottomSheetWidget();
+        return const BottomSheetWidget();
       },
     );
   }
+
+  void _toggleSearchBar() {
+    setState(() {
+      showSearchBar = !showSearchBar;
+      if (showSearchBar) {
+        _scrollController.animateTo(
+          screenHeight,
+          duration: Duration(milliseconds: 300),
+          curve: Curves.easeOut,
+        );
+      }
+    });
+  }
+
+
   @override
   Widget build(BuildContext context) {
+    screenHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
       body: Stack(
         children: [
@@ -81,45 +100,53 @@ class _HomePageState extends State<HomePage> {
 
 
               
-               SliverToBoxAdapter(
+               const SliverToBoxAdapter(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    if (showSearchBar) // Conditionally render the search bar
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: TextField(
-                          decoration: InputDecoration(
-                            hintText: 'Search...',
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8.0),
-                            ),
-                            prefixIcon: Icon(Icons.search),
-                          ),
-                        ),
-                      ),
+                    // if (showSearchBar) // Conditionally render the search bar
+                    //   Padding(
+                    //     padding: const EdgeInsets.all(8.0),
+                    //     child: TextField(
+                    //       decoration: InputDecoration(
+                    //         hintText: 'Search...',
+                    //         border: OutlineInputBorder(
+                    //           borderRadius: BorderRadius.circular(8.0),
+                    //         ),
+                    //         prefixIcon: Icon(Icons.search),
+                    //       ),
+                    //     ),
+                    //   ),
 
-                    const SizedBox(height: 15,),
-                    const Text("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod vestibulum lacus, nec consequat nulla efficitur sit amet. Proin eu lorem libero. Sed id enim in urna tincidunt sodales. Vivamus vel semper ame...Read more"),
+                     SizedBox(height: 15,),
+                     Text("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod vestibulum lacus, nec consequat nulla efficitur sit amet. Proin eu lorem libero. Sed id enim in urna tincidunt sodales. Vivamus vel semper ame...Read more"),
 
-                    const SizedBox(height: 10,),
-                    const Wrap(
+                     SizedBox(height: 10,),
+                     Wrap(
                       spacing: 10,
 
                       children: [
                         Chip(label: Text('Outdoor'),
-                        padding: EdgeInsets.symmetric(horizontal: 14,vertical: 5),),
+                        padding: EdgeInsets.symmetric(horizontal: 12,vertical: 5),
+                          labelStyle: TextStyle(color: Colors.red),
+                          side: BorderSide(color: Colors.red),),
                         Chip(label: Text('Outdoor'),
-                          padding: EdgeInsets.symmetric(horizontal: 14,vertical: 5),),
+                          padding: EdgeInsets.symmetric(horizontal: 12,vertical: 5),
+                          labelStyle: TextStyle(color: Colors.red),
+                          side: BorderSide(color: Colors.red),),
                         Chip(label: Text('Outdoor'),
-                          padding: EdgeInsets.symmetric(horizontal: 14,vertical: 5),),
+                          padding: EdgeInsets.symmetric(horizontal: 12,vertical: 5),
+                          labelStyle: TextStyle(color: Colors.red),
+                          side: BorderSide(color: Colors.red),),
                         Chip(label: Text('+1'),
-                          padding: EdgeInsets.symmetric(horizontal: 14,vertical: 5),),
+                          padding: EdgeInsets.symmetric(horizontal: 12,vertical: 5),
+                          labelStyle: TextStyle(color: Colors.red),
+                          side: BorderSide(color: Colors.red),),
                       ],
                     ),
-                    const SizedBox(height: 16),
-                    const Text('Media, docs and links',style: TextStyle(fontSize: 20),),
-                    const SizedBox(height: 8),
+                     SizedBox(height: 16),
+                     Text('Media, docs and links',style: TextStyle(fontSize: 20),),
+                     SizedBox(height: 8),
                   ],
                 ),
               ),
@@ -180,16 +207,52 @@ class _HomePageState extends State<HomePage> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Text("Memebers"),
-                    Spacer(),
-                    IconButton(onPressed: (){
-                      showSearchBar = !showSearchBar;
-                      _scrollController.offset==210;
-                      setState(() {});
-                    }, icon: const Icon(Icons.search))
+                    const Text("Memebers"),
+                    const Spacer(),
+                    IconButton(onPressed: _toggleSearchBar,
+                        icon: const Icon(Icons.search))
                   ],
                 ),
               ),
+
+              // SliverToBoxAdapter(
+              //   child: AnimatedOpacity(
+              //     opacity: showSearchBar ? 1.0 : 0.0,
+              //     duration: const Duration(milliseconds: 300),
+              //     child: IgnorePointer(
+              //       ignoring: !showSearchBar,
+              //       child: Padding(
+              //         padding: const EdgeInsets.all(8.0),
+              //         child: TextField(
+              //           decoration: InputDecoration(
+              //             hintText: 'Search Member',
+              //             border: OutlineInputBorder(
+              //               borderRadius: BorderRadius.circular(8.0),
+              //             ),
+              //             prefixIcon: Icon(Icons.search),
+              //           ),
+              //         ),
+              //       ),
+              //     ),
+              //   ),
+              // ),
+              SliverToBoxAdapter(
+                child: showSearchBar
+                    ? Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextField(
+                    decoration: InputDecoration(
+                      hintText: 'Search Member',
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                      prefixIcon: const Icon(Icons.search),
+                    ),
+                  ),
+                )
+                    : const SizedBox.shrink(),
+              ),
+
 
               SliverList(
                 delegate: SliverChildBuilderDelegate(
