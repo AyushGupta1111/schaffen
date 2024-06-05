@@ -1,8 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-
-
+import 'package:schaffen_assignment/bottom_sheet.dart';
 class HomePage extends StatefulWidget{
   const HomePage({super.key});
   @override
@@ -24,7 +22,6 @@ class _HomePageState extends State<HomePage> {
           scroll=true;
           setState(() {});
         }
-
         else if (_scrollController.offset <200 && scroll){
           scroll=false;
           setState(() {});
@@ -32,7 +29,14 @@ class _HomePageState extends State<HomePage> {
       }
     });
   }
-
+  void _showBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return BottomSheetWidget();
+      },
+    );
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -64,7 +68,9 @@ class _HomePageState extends State<HomePage> {
                         ],
                       ),
                       const Spacer(),
-                      IconButton(onPressed: (){}, icon: const Icon(Icons.more_vert))
+                      IconButton(onPressed: (){
+                        _showBottomSheet(context);
+                      }, icon: const Icon(Icons.more_vert))
                     ],
                   )
                   :const SizedBox(height: 0,),
@@ -92,9 +98,12 @@ class _HomePageState extends State<HomePage> {
                           ),
                         ),
                       ),
-                    Text("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod vestibulum lacus, nec consequat nulla efficitur sit amet. Proin eu lorem libero. Sed id enim in urna tincidunt sodales. Vivamus vel semper ame...Read more"),
+
+                    const SizedBox(height: 15,),
+                    const Text("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod vestibulum lacus, nec consequat nulla efficitur sit amet. Proin eu lorem libero. Sed id enim in urna tincidunt sodales. Vivamus vel semper ame...Read more"),
+
                     const SizedBox(height: 10,),
-                    Wrap(
+                    const Wrap(
                       spacing: 10,
 
                       children: [
@@ -108,9 +117,9 @@ class _HomePageState extends State<HomePage> {
                           padding: EdgeInsets.symmetric(horizontal: 14,vertical: 5),),
                       ],
                     ),
-                    SizedBox(height: 16),
-                    Text('Media, docs and links',style: TextStyle(fontSize: 20),),
-                    SizedBox(height: 8),
+                    const SizedBox(height: 16),
+                    const Text('Media, docs and links',style: TextStyle(fontSize: 20),),
+                    const SizedBox(height: 8),
                   ],
                 ),
               ),
@@ -153,13 +162,14 @@ class _HomePageState extends State<HomePage> {
                       onTap: () {},
                     ),
                     ListTile(
-                      leading: const Icon(Icons.exit_to_app),
-                      title: const Text('Exit community'),
+                      leading: const Icon(Icons.exit_to_app,color: Colors.red,),
+                      title: const Text('Exit community',style: TextStyle(color: Colors.red),),
                       onTap: () {},
                     ),
                     ListTile(
-                      leading: const Icon(Icons.favorite),
-                      title: const Text('Report'),
+
+                      leading: Image.asset("asset/images/icon.png",height: 30,),
+                      title: const Text('Report',style: TextStyle(color: Colors.red),),
                       onTap: () {},
                     ),
 

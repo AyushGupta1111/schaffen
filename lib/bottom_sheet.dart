@@ -6,26 +6,26 @@ class BottomSheetWidget extends StatelessWidget {
       child: Wrap(
         children: <Widget>[
           ListTile(
-            leading: Icon(Icons.person_add),
-            title: Text('Add Member'),
+            leading: Image.asset("asset/images/invite.png",width: 25,),
+            title: const Text('Invite'),
+            onTap: () {
+              // Invite logic
+              Navigator.pop(context);
+            },
+          ),
+          ListTile(
+            leading:const  Icon(Icons.person_add),
+            title:const  Text('Add Member'),
             onTap: () {
               // Add member logic
               Navigator.pop(context);
             },
           ),
           ListTile(
-            leading: Icon(Icons.group_add),
-            title: Text('Add Group'),
+            leading:Image.asset("asset/images/group.png",width: 25,),
+            title:const  Text('Add Group'),
             onTap: () {
               // Add group logic
-              Navigator.pop(context);
-            },
-          ),
-          ListTile(
-            leading: Icon(Icons.mail),
-            title: Text('Invite'),
-            onTap: () {
-              // Invite logic
               Navigator.pop(context);
             },
           ),
